@@ -105,6 +105,11 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({
                             fontSize: `${fontSize}px`,
                             lineHeight: '1.5'
                         }}
+                        codeTagProps={{
+                            style: {
+                                fontSize: 'inherit'
+                            }
+                        }}
                     >
                         {code || '// Generated code will appear here'}
                     </SyntaxHighlighter>

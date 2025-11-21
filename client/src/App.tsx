@@ -17,6 +17,7 @@ export interface HistoryItem {
 function App() {
   const [language, setLanguage] = useState<'cpp' | 'javascript' | 'python'>('javascript');
   const [code, setCode] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Initialize state from localStorage if available
@@ -55,7 +56,7 @@ function App() {
     }
   }, [theme]);
 
-  const handleGenerate = async (prompt: string) => {
+  const handleGenerate = async (promptText: string) => {
     setIsLoading(true);
     try {
       const response = await fetch('http://localhost:5001/generate', {
@@ -63,14 +64,14 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt, language }),
+        body: JSON.stringify({ prompt: promptText, language }),
       });
       const data = await response.json();
       setCode(data.code);
 
       const newItem: HistoryItem = {
         id: Date.now().toString(),
-        prompt,
+        prompt: promptText,
         language,
         timestamp: Date.now(),
         code: data.code,
@@ -88,6 +89,7 @@ function App() {
   const handleHistorySelect = (item: HistoryItem) => {
     setCode(item.code);
     setLanguage(item.language as any);
+    setPrompt(item.prompt);
   };
 
   const toggleFavorite = (id: string) => {
@@ -130,7 +132,12 @@ function App() {
         <div className="flex flex-col w-full md:w-1/2 gap-4 h-full min-h-0">
           <LanguageSelector selected={language} onSelect={setLanguage} />
           <div className="flex-1 min-h-0">
-            <PromptInput onSubmit={handleGenerate} isLoading={isLoading} />
+            <PromptInput
+              value={prompt}
+              onChange={setPrompt}
+              onSubmit={handleGenerate}
+              isLoading={isLoading}
+            />
           </div>
         </div>
         <div className="flex-1 w-full md:w-1/2 min-h-0">

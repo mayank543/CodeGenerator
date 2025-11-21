@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = 5001;
@@ -8,52 +12,34 @@ const PORT = 5001;
 app.use(cors());
 app.use(bodyParser.json());
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
 interface GenerateRequest {
     prompt: string;
     language: 'cpp' | 'javascript' | 'python';
 }
 
-const MOCK_RESPONSES: Record<string, string> = {
-    cpp: `#include <iostream>
-#include <algorithm>
-#include <string>
-
-std::string reverseString(std::string str) {
-    std::reverse(str.begin(), str.end());
-    return str;
-}
-
-int main() {
-    std::string s = "Hello World";
-    std::cout << reverseString(s) << std::endl;
-    return 0;
-}`,
-    javascript: `function reverseString(str) {
-  return str.split('').reverse().join('');
-}
-
-console.log(reverseString("Hello World"));`,
-    python: `def reverse_string(s):
-    return s[::-1]
-
-print(reverse_string("Hello World"))`
-};
-
-app.post('/generate', (req, res) => {
+app.post('/generate', async (req, res) => {
     const { prompt, language } = req.body as GenerateRequest;
 
     console.log(`Received prompt: "${prompt}" for language: ${language}`);
 
-    // Simple mock logic: always return the reverse string example for now,
-    // but respecting the requested language.
-    // In a real app, this would call an LLM.
+    try {
+        const fullPrompt = `Write a ${language} code snippet for the following prompt: ${prompt}. Only return the code, no markdown formatting or explanation.`;
 
-    const code = MOCK_RESPONSES[language] || '// Language not supported';
+        const result = await model.generateContent(fullPrompt);
+        const response = await result.response;
+        let code = response.text();
 
-    // Simulate delay
-    setTimeout(() => {
+        // Clean up potential markdown code blocks if the model returns them despite instructions
+        code = code.replace(/^```[a-z]*\n/i, '').replace(/\n```$/, '');
+
         res.json({ code });
-    }, 500);
+    } catch (error) {
+        console.error("Error generating content:", error);
+        res.status(500).json({ error: "Failed to generate code" });
+    }
 });
 
 app.listen(PORT, () => {
