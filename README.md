@@ -101,8 +101,7 @@ The backend exposes a simple endpoint to generate code.
 
 ## What else I could have done?
 
-1. I could have worked on a feature that lets you automatically switch to correct language based on the prompt.
-2. I could have added more smooth animations## What else I could have done?
+
 
 1. I could have worked on a feature that lets you automatically switch to correct language based on the prompt.
 2. I could have added more smooth animations depending on the user's preference.
