@@ -137,8 +137,8 @@ function App() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col md:flex-row p-6 gap-6 overflow-hidden transition-all duration-300">
-        <div className="flex flex-col w-full md:w-1/2 gap-4 h-full min-h-0">
+      <div className="flex-1 flex flex-col md:flex-row p-6 gap-6 overflow-visible md:overflow-hidden transition-all duration-300">
+        <div className="flex flex-col w-full md:w-1/2 gap-4 h-auto md:h-full min-h-[300px] md:min-h-0">
           <LanguageSelector selected={language} onSelect={setLanguage} />
           <div className="flex-1 min-h-0">
             <PromptInput
@@ -150,7 +150,7 @@ function App() {
             />
           </div>
         </div>
-        <div className="flex-1 w-full md:w-1/2 min-h-0">
+        <div className="flex-1 w-full md:w-1/2 min-h-[500px] md:min-h-0">
           <CodeOutput
             code={code}
             language={language}

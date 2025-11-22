@@ -46,7 +46,7 @@ export const Layout: React.FC<LayoutProps> = ({
                     )}
                 </button>
             </header>
-            <main className="flex-1 flex flex-col md:flex-row overflow-hidden h-[calc(100vh-73px)]">
+            <main className="flex-1 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden h-[calc(100vh-73px)]">
                 {children}
             </main>
         </div>
