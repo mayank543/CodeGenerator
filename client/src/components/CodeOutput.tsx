@@ -80,12 +80,12 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({
                     )}
                 </button>
             </div>
-            <div className="flex-1 overflow-auto custom-scrollbar relative">
+            <div className={`flex-1 relative ${isEditing ? 'overflow-hidden' : 'overflow-auto custom-scrollbar'}`}>
                 {isEditing ? (
                     <textarea
                         value={code}
                         onChange={(e) => onCodeChange(e.target.value)}
-                        className="w-full h-full p-6 bg-transparent text-neutral-900 dark:text-neutral-100 font-mono resize-none focus:outline-none"
+                        className="w-full h-full p-6 bg-transparent text-neutral-900 dark:text-neutral-100 font-mono resize-none focus:outline-none overflow-auto custom-scrollbar"
                         style={{
                             fontSize: `${fontSize}px`,
                             lineHeight: '1.5',
