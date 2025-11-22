@@ -21,14 +21,14 @@ export const Layout: React.FC<LayoutProps> = ({
                 <div className="flex items-center gap-4">
                     <button
                         onClick={onToggleSidebar}
-                        className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
+                        className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-all duration-300 ease-in-out hover:rotate-180 active:scale-95"
                         title={isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </button>
-                    <h1 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">CodeGen AI</h1>
+                    <h1 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">Copilot</h1>
                 </div>
                 <button
                     onClick={onToggleTheme}
