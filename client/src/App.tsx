@@ -15,7 +15,7 @@ export interface HistoryItem {
 }
 
 function App() {
-  const [language, setLanguage] = useState<'cpp' | 'javascript' | 'python'>('javascript');
+  const [language, setLanguage] = useState<'cpp' | 'javascript' | 'python' | 'java' | 'c'>('javascript');
   const [code, setCode] = useState('');
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -98,6 +98,10 @@ function App() {
     ));
   };
 
+  const deleteHistoryItem = (id: string) => {
+    setHistory(prev => prev.filter(item => item.id !== id));
+  };
+
   return (
     <Layout
       theme={theme}
@@ -124,7 +128,12 @@ function App() {
         `}
       >
         <div className="w-64 h-full">
-          <History items={history} onSelect={handleHistorySelect} onToggleFavorite={toggleFavorite} />
+          <History
+            items={history}
+            onSelect={handleHistorySelect}
+            onToggleFavorite={toggleFavorite}
+            onDelete={deleteHistoryItem}
+          />
         </div>
       </div>
 
@@ -137,6 +146,7 @@ function App() {
               onChange={setPrompt}
               onSubmit={handleGenerate}
               isLoading={isLoading}
+              favorites={history.filter(item => item.isFavorite)}
             />
           </div>
         </div>
@@ -148,6 +158,7 @@ function App() {
             onFontSizeChange={setFontSize}
             theme={theme}
             onCodeChange={setCode}
+            isLoading={isLoading}
           />
         </div>
       </div>

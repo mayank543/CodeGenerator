@@ -17,7 +17,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 interface GenerateRequest {
     prompt: string;
-    language: 'cpp' | 'javascript' | 'python';
+    language: 'cpp' | 'javascript' | 'python' | 'java' | 'c';
 }
 
 app.post('/generate', async (req, res) => {

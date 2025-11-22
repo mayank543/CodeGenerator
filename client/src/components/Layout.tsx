@@ -16,7 +16,7 @@ export const Layout: React.FC<LayoutProps> = ({
     onToggleSidebar
 }) => {
     return (
-        <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col transition-colors duration-300">
+        <div className="h-screen overflow-hidden bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col transition-colors duration-300">
             <header className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex justify-between items-center">
                 <div className="flex items-center gap-4">
                     <button
